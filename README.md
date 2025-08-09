@@ -52,24 +52,6 @@ Your app will open at [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 📁 Project Structure
-
-ArtVanta-AI/
-├── public/ # Static assets
-├── src/
-│ ├── components/ # UI components
-│ ├── App.js / App.jsx # Main app file
-│ ├── index.css # Tailwind CSS imports
-│ └── main.js / main.jsx # Entry point
-├── package.json
-├── tailwind.config.js
-├── postcss.config.js
-├── README.md
-
-text
-
----
-
 ## 📦 Build for Production
 
 npm run build
