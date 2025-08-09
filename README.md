@@ -21,7 +21,6 @@ ArtVanta AI transforms your imagination into reality! Built with **React** and *
 - [React](https://react.dev/) – Fast, declarative frontend library
 - [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS framework
 - [JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- [Pollinations API](https://image.pollinations.ai/) – AI-powered image generation (cloud endpoint)
 
 ---
 
