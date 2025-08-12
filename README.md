@@ -30,20 +30,21 @@ ArtVanta AI transforms your imagination into reality! Built with **React** and *
 
 ## ⚡ Getting Started
 
-### 1. **Clone the Repo**
-
+### 1) Clone the repository
 git clone https://github.com/Sarbojit357/ArtVanta-AI.git
 cd ArtVanta-AI
 
-### 2. **Install Dependencies**
+### 2) Install dependencies
 npm install
 
-### 3. **Start the Development Server**
+### 3) Start the development server
+- Create React App:
+npm start
 
-npm start # For Create React App
-or
-npm run dev # For Vite-based versions
-Your app will open at [http://localhost:3000](http://localhost:3000).
+- Vite:
+npm run dev
+
+Your app will open at http://localhost:3000 (or the port shown in your terminal).
 
 ---
 
