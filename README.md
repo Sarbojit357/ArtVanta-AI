@@ -39,16 +39,12 @@ cd ArtVanta-AI
 npm install
 
 ### 3. **Start the Development Server**
+
 npm start # For Create React App
 or
 npm run dev # For Vite-based versions
 Your app will open at [http://localhost:3000](http://localhost:3000).
----
 
-## 📦 Build for Production
-
-npm run build
-Creates an optimized build in the `build/` (CRA) or `dist/` (Vite) directory.
 ---
 
 ## 🤝 Contributing
@@ -57,16 +53,19 @@ Contributions welcome!
 - Fork the repo  
 - Create a new branch (`feature/my-feature`)  
 - Commit changes and open a pull request
+
 ---
 ## 📜 License
 
 MIT License.  
 Feel free to use or adapt the code with proper attribution.
+
 ---
 ## 👤 Author
 
 **Built by Sarbojit Podder**  
 - [GitHub](https://github.com/Sarbojit357)
 - [LinkedIn](https://www.linkedin.com/)
+  
 ---
 ⭐️ _If you like this project, please star the repo to support !_
