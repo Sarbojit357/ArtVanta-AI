@@ -32,6 +32,7 @@ ArtVanta AI transforms your imagination into reality! Built with **React** and *
 
 ### 1) Clone the repository
 git clone https://github.com/Sarbojit357/ArtVanta-AI.git
+
 cd ArtVanta-AI
 
 ### 2) Install dependencies
