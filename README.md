@@ -22,6 +22,11 @@ ArtVanta AI transforms your imagination into reality! Built with **React** and *
 - [JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ---
+## 📸 Screenshots
+
+![artvanataai](https://github.com/user-attachments/assets/66bd2b16-2d86-4414-af41-707605940f73)
+
+---
 
 ## ⚡ Getting Started
 
@@ -60,10 +65,6 @@ text
 Creates an optimized build in the `build/` (CRA) or `dist/` (Vite) directory.
 
 ---
-
-## 📸 Screenshots
-
-![artvanataai](https://github.com/user-attachments/assets/66bd2b16-2d86-4414-af41-707605940f73)
 
 ---
 
