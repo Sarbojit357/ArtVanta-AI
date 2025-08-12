@@ -46,6 +46,7 @@ Your app will open at [http://localhost:3000](http://localhost:3000).
 ---
 
 ## 📦 Build for Production
+
 npm run build
 Creates an optimized build in the `build/` (CRA) or `dist/` (Vite) directory.
 ---
