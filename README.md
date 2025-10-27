@@ -1,4 +1,3 @@
-text
 # 🎨 ArtVanta AI – AI-Powered Image Generator
 
 ArtVanta AI transforms your imagination into reality! Built with **React** and **Tailwind CSS**, this modern web app generates stunning AI-driven images from text prompts. Unlike other AI art generators that set daily image limits, require credits, or have paywalls, **ArtVanta AI is truly unlimited**. Enjoy complete creative freedom and generate as many images as you want, absolutely free!
