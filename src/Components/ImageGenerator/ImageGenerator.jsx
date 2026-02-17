@@ -1,11 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-
 const ImageGenerator = () => {
   const [imageUrl, setImageUrl] = useState("/");
   const [loading, setLoading] = useState(false);
+  const [statusText, setStatusText] = useState("");
   const inputRef = useRef(null);
-
 
   const examplePrompts = [
     "A majestic dragon flying over a crystal lake at sunset",
@@ -22,43 +21,51 @@ const ImageGenerator = () => {
     }
   }, []);
 
-
   const handleGenerate = async () => {
-    if (!inputRef.current.value.trim()) {
+    const prompt = inputRef.current.value.trim();
+    if (!prompt) {
       alert("Please enter a description for the image");
       inputRef.current.focus();
       return;
     }
+
     setLoading(true);
+    setStatusText("Creating your masterpiece...");
+
     try {
-      const prompt = encodeURIComponent(inputRef.current.value.trim());
+      const apiKey = process.env.REACT_APP_POLLINATIONS_API_KEY;
+      const encodedPrompt = encodeURIComponent(prompt);
       const seed = Math.floor(Math.random() * 1000000);
-      const newImageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=1024&height=1024&seed=${seed}&enhance=true&nologo=true`;
-      await preloadImage(newImageUrl);
-      setImageUrl(newImageUrl);
+
+      // Use gen.pollinations.ai which works reliably (image.pollinations.ai has Cloudflare issues)
+      let newImageUrl = `https://gen.pollinations.ai/image/${encodedPrompt}?width=1024&height=1024&model=flux&seed=${seed}&nologo=true`;
+      if (apiKey) {
+        newImageUrl += `&key=${apiKey}`;
+      }
+
+      setStatusText("Generating image...");
+
+      // Use fetch to get the image as a blob (better error handling than Image() element)
+      const response = await fetch(newImageUrl);
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      setImageUrl(blobUrl);
     } catch (err) {
       console.error('Error generating image:', err);
       alert("Failed to generate image. Please try again with a different prompt.");
     }
     setLoading(false);
+    setStatusText("");
   };
-
-
-  const preloadImage = (url) =>
-    new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(url);
-      img.onerror = () => reject(new Error('Failed to load image'));
-      img.src = url;
-    });
-
 
   const handleClear = () => {
     setImageUrl("/");
     inputRef.current.value = "";
     inputRef.current.focus();
   };
-
 
   const handleExampleClick = (prompt) => {
     inputRef.current.value = prompt;
@@ -67,39 +74,22 @@ const ImageGenerator = () => {
 
   const handleDownload = async () => {
     if (imageUrl === "/") return;
-
-
     try {
-      const response = await fetch(imageUrl);
+      const response = await fetch(imageUrl, { referrerPolicy: "no-referrer" });
       const blob = await response.blob();
-      const img = document.createElement('img');
-      const url = window.URL.createObjectURL(blob);
-      img.src = url;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.95);
-        const a = document.createElement('a');
-        a.href = jpgDataUrl;
-        a.download = `artvantaai-image-${Date.now()}.jpg`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      };
-      img.onerror = () => {
-        window.URL.revokeObjectURL(url);
-        alert('Error processing image for JPG download.');
-      };
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = `artvantaai-image-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Error downloading image:', error);
       alert('Failed to download image');
     }
   };
-
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -107,7 +97,6 @@ const ImageGenerator = () => {
       handleGenerate();
     }
   };
-
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 flex flex-col items-center gap-10">
@@ -117,10 +106,9 @@ const ImageGenerator = () => {
           ArtVanta <span className="text-pink-400">AI</span> Image Generator
         </h1>
         <p className="text-gray-300 text-lg md:text-xl max-w-2xl text-center mt-2">
-          Transform your imagination into reality with ArtVanta AI-powered image generation
+          Transform your imagination into reality with AI-powered image generation
         </p>
       </div>
-
 
       {/* Image Display Area */}
       <div className="relative w-full max-w-3xl card overflow-hidden">
@@ -140,29 +128,27 @@ const ImageGenerator = () => {
               className="w-full h-full object-cover rounded-xl select-none"
               loading="eager"
               draggable={false}
+              referrerPolicy="no-referrer"
             />
           )}
         </div>
 
-
         {loading && (
           <div className="absolute inset-0 flex flex-col justify-center items-center glass text-white z-20 rounded-xl">
             <div className="loader border-4 border-gray-300 border-t-pink-500 rounded-full w-16 h-16 mb-4"></div>
-            <p className="text-lg font-semibold">Creating your masterpiece...</p>
+            <p className="text-lg font-semibold">{statusText || "Creating your masterpiece..."}</p>
           </div>
         )}
-
 
         {imageUrl !== "/" && !loading && (
           <button
             onClick={handleDownload}
             className="absolute top-4 right-4 btn-primary text-sm py-2 px-4"
           >
-            Download JPG
+            Download Image
           </button>
         )}
       </div>
-
 
       {/* Controls */}
       <div className="w-full max-w-4xl space-y-6">
@@ -192,7 +178,6 @@ const ImageGenerator = () => {
           </button>
         </div>
 
-
         {/* Example Prompts */}
         <div className="flex flex-wrap gap-3 justify-center">
           {examplePrompts.map((prompt, idx) => (
@@ -211,6 +196,5 @@ const ImageGenerator = () => {
     </div>
   );
 };
-
 
 export default ImageGenerator;
