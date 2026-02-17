@@ -18,7 +18,6 @@ ArtVanta AI transforms your imagination into reality! Built with **React** and *
 ## 🖥️ Tech Stack
 - [React](https://react.dev/) – Fast, declarative frontend library
 - [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS framework
-- [JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ---
 ## 📸 Screenshots
